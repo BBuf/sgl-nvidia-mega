@@ -1,5 +1,5 @@
 # Overall owners: every path without a more specific line below.
-* @YAMY1234
+* @Oasis-Git
 
 # Per model: one owner for its step code, kernels and tests. Each new model's PR
 # adds its line.
