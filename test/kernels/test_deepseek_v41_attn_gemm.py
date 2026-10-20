@@ -434,7 +434,7 @@ def _bitwise(a, b):
 @pytest.mark.parametrize("b", [6, 16, 24])
 def test_swapab_q_rope_and_kv_before_wait(b):
     try:
-        from sglang.kernels.ops.attention.dsv4.elementwise import fused_q_norm_rope
+        from sglang.kernels.ops.attention.dsv4 import fused_q_norm_rope
     except ImportError:
         pytest.skip("this SGLang has no fused_q_norm_rope")
     kv, _ = _make_cache(64)
