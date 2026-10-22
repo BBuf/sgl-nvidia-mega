@@ -56,7 +56,7 @@ SGLANG_READS = {
     ),
     "srt/models/deepseek_v4_mhc.py": ("AttnOutput",),
     "srt/layers/quantization/mxfp8_input.py": ("Mxfp8SwizzledInput",),
-    "srt/megakernels/binding.py": (
+    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
         "kv_pool",
         "swa_out_cache_loc",
         "attention",

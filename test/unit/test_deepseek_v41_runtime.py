@@ -17,7 +17,11 @@ from scheduler_init import (  # noqa: E402
     Scenario,
     SchedulerInit,
 )
-from sglang.srt.megakernels.spec import Step  # noqa: E402
+
+try:
+    from sglang.kernels.plugin_kernels.nvidia.spec import Step
+except ImportError:  # SGLang before sgl-project/sglang#45389
+    from sglang.srt.megakernels.spec import Step
 
 from sgl_nvidia_mega.deepseek_v41 import runtime, spec  # noqa: E402
 from sgl_nvidia_mega.deepseek_v41.engram import prefetch  # noqa: E402
@@ -163,7 +167,10 @@ def test_runtime_build_hands_every_package_the_binding(monkeypatch):
         "sglang.srt.runtime_context.get_parallel",
         lambda: SimpleNamespace(tp_group=None),
     )
-    from sglang.srt.megakernels.binding import MegakernelBinding
+    try:
+        from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
+    except ImportError:  # SGLang before sgl-project/sglang#45389
+        from sglang.srt.megakernels.binding import MegakernelBinding
 
     model = SimpleNamespace()
     binding = MegakernelBinding(model=model)  # SGLang's own, as install builds it
@@ -324,7 +331,10 @@ def _ctx(binding=None):
 def test_the_host_table_comes_from_the_binding(monkeypatch):
     """SGLang's own MegakernelBinding hands the layer's host table (a shared one here,
     which the prefetch refuses)."""
-    from sglang.srt.megakernels.binding import MegakernelBinding
+    try:
+        from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
+    except ImportError:  # SGLang before sgl-project/sglang#45389
+        from sglang.srt.megakernels.binding import MegakernelBinding
 
     model = _model()
     engram = model.model.layers[1].engram

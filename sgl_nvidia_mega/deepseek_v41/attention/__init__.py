@@ -29,7 +29,10 @@ SGLANG_READS = {
         "low_ratio_req_indices",
         "low_ratio_pos_i64",
     ),
-    "srt/megakernels/binding.py": ("ForwardView", "metadata"),
+    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+        "ForwardView",
+        "metadata",
+    ),
     "srt/models/deepseek_v4.py": (
         "self_attn",
         "maybe_use_decode_attn_tp",

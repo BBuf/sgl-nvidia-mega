@@ -4,11 +4,13 @@
 calling, pinned on CPU against the installed SGLang.
 
 The megakernel lives outside SGLang, so it reads SGLang by name (its specs plug into
-``sglang.srt.megakernels``). Every module that imports from
+``sglang.kernels.plugin_kernels.nvidia``). Every module that imports from
 ``sglang`` lists what it reads in ``SGLANG_READS``. A refactor that renames one fails here, naming the file to
 repair, instead of failing at a GPU server's startup. The checks are static
-(AST): no module of this package is imported. Run it against each SGLang this
-package supports, and nightly against SGLang main.
+(AST): no module of this package is imported. A file that moved between SGLang
+versions is named by its locations newest first, ``"new.py|old.py"``; the first one
+the installed SGLang has is checked. Run it against each SGLang this package
+supports, and nightly against SGLang main.
 """
 
 import ast
@@ -27,6 +29,15 @@ PACKAGE = Path(sgl_nvidia_mega.__file__).resolve().parent
 @lru_cache(maxsize=None)
 def _tree(path: Path) -> ast.Module:
     return ast.parse(path.read_text())
+
+
+def _files(pattern: str) -> list:
+    """The files a ``SGLANG_READS`` key names: its first alternative that exists."""
+    for alternative in pattern.split("|"):
+        files = sorted(ROOT.glob(alternative))
+        if files:
+            return files
+    return []
 
 
 @lru_cache(maxsize=None)
@@ -95,7 +106,7 @@ def test_every_sglang_import_is_declared(path):
 def test_sglang_provides_what_the_plugin_reads(path):
     missing = []
     for pattern, names in _declared(path).items():
-        files = sorted(ROOT.glob(pattern))
+        files = _files(pattern)
         assert files, f"{_id(path)}: no file matches {pattern}"
         provided = frozenset().union(*map(_provided, files))
         missing += [f"{pattern}: {n}" for n in names if n not in provided]
@@ -107,7 +118,7 @@ def test_sglang_provides_what_the_plugin_reads(path):
 
 # What SGLang's binding file tolerates the megakernel still calling, writing and
 # reading; any change there must be reviewed here
-BINDING = "srt/megakernels/binding.py"
+BINDING = "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py"
 PINNED_TOLERATED = {
     "TOLERATED_CALLABLES": (
         "ForwardView.attention",
@@ -134,7 +145,7 @@ PINNED_TOLERATED = {
 
 
 def _binding_tuple(name: str) -> tuple:
-    for node in _tree(ROOT / BINDING).body:
+    for node in _tree(_files(BINDING)[0]).body:
         if isinstance(node, ast.Assign) and any(
             isinstance(t, ast.Name) and t.id == name for t in node.targets
         ):

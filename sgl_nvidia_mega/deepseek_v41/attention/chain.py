@@ -74,7 +74,11 @@ SGLANG_READS = {
         "_pad_tensor_to_size",
     ),
     "srt/layers/attention/dsv4/dsv41_sparse.py": ("wq_b",),
-    "srt/megakernels/binding.py": ("ForwardView", "metadata", "kv_pool"),
+    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+        "ForwardView",
+        "metadata",
+        "kv_pool",
+    ),
     "srt/mem_cache/deepseek_v4_memory_pool.py": (
         "request_window",
         "get_swa_key_buffer_radix",

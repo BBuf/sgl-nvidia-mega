@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 """The SGLang plugin entry point: it registers the megakernel specs with SGLang's
-``sglang.srt.megakernels``, which runs them on a server started with
+``sglang.kernels.plugin_kernels.nvidia``, which runs them on a server started with
 ``--enable-nvidia-megakernel``."""
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ TEST_HOOKS = (
 # The SGLang names this module reads (test/unit/test_contract.py pins them)
 SGLANG_READS = {
     # the entry point name pyproject.toml declares (test/unit/test_plugin.py)
-    "srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
         '"nvidia_megakernel"',
         "register",
         "register(architecture)",
@@ -48,10 +48,13 @@ SGLANG_READS = {
 def register() -> None:
     """SGLang's plugin loader calls this in every process, before any model is built."""
     try:
-        import sglang.srt.megakernels.spec as megakernels
-    except ImportError:
-        logger.warning("sgl-nvidia-mega: this SGLang has no sglang.srt.megakernels")
-        return
+        import sglang.kernels.plugin_kernels.nvidia.spec as megakernels
+    except ImportError:  # SGLang before sgl-project/sglang#45389
+        try:
+            import sglang.srt.megakernels.spec as megakernels
+        except ImportError:
+            logger.warning("sgl-nvidia-mega: this SGLang has no megakernel interface")
+            return
     for architecture, path in SPECS:
         megakernels.register(architecture=architecture, path=path)
     if os.environ.get(PARITY_SORT_ENV) == "1":
