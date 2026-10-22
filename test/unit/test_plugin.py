@@ -7,7 +7,7 @@ import pytest
 
 try:
     from sglang.kernels.plugin_kernels.nvidia import spec as registry
-except ImportError:  # SGLang before sgl-project/sglang#45389
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
     from sglang.srt.megakernels import spec as registry
 
 from sgl_nvidia_mega import plugin

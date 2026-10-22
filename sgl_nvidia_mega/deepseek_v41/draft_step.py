@@ -172,7 +172,7 @@ class DraftDecode(DraftProposal):
     def plan(self, input_ids, forward_batch, *args, **kwargs):
         try:
             from sglang.kernels.plugin_kernels.nvidia.spec import Step
-        except ImportError:  # SGLang before sgl-project/sglang#45389
+        except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
             from sglang.srt.megakernels.spec import Step
 
         from sgl_nvidia_mega.deepseek_v41.spec import serves_this_step

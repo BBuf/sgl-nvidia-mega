@@ -49,7 +49,7 @@ def register() -> None:
     """SGLang's plugin loader calls this in every process, before any model is built."""
     try:
         import sglang.kernels.plugin_kernels.nvidia.spec as megakernels
-    except ImportError:  # SGLang before sgl-project/sglang#45389
+    except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
         try:
             import sglang.srt.megakernels.spec as megakernels
         except ImportError:

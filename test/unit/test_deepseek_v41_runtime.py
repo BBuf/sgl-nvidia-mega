@@ -20,7 +20,7 @@ from scheduler_init import (  # noqa: E402
 
 try:
     from sglang.kernels.plugin_kernels.nvidia.spec import Step
-except ImportError:  # SGLang before sgl-project/sglang#45389
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
     from sglang.srt.megakernels.spec import Step
 
 from sgl_nvidia_mega.deepseek_v41 import runtime, spec  # noqa: E402
@@ -169,7 +169,7 @@ def test_runtime_build_hands_every_package_the_binding(monkeypatch):
     )
     try:
         from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
-    except ImportError:  # SGLang before sgl-project/sglang#45389
+    except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
         from sglang.srt.megakernels.binding import MegakernelBinding
 
     model = SimpleNamespace()
@@ -333,7 +333,7 @@ def test_the_host_table_comes_from_the_binding(monkeypatch):
     which the prefetch refuses)."""
     try:
         from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
-    except ImportError:  # SGLang before sgl-project/sglang#45389
+    except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
         from sglang.srt.megakernels.binding import MegakernelBinding
 
     model = _model()

@@ -19,7 +19,7 @@ try:
         NumericsKind,
         Requirements,
     )
-except ImportError:  # SGLang before sgl-project/sglang#45389
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
     from sglang.srt.megakernels.spec import (
         Feature,
         MegakernelSpec,
