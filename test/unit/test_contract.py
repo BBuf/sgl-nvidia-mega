@@ -115,6 +115,7 @@ PINNED_TOLERATED = {
         "ForwardView.swa_out_cache_loc",
         "ForwardView.low_ratio_sources",
         "ForwardView.core_compressor",
+        "KdaStepView.track_decode_state",
         "KvPoolView.set_swa_key_buffer_radix_fused_norm_rope",
         "KvPoolView.pool",
         "sglang.kernels.ops",
@@ -153,17 +154,38 @@ def test_every_binding_callable_the_plugin_reads_is_tolerated():
     callables = {
         name.split(".", 1)[1]
         for name in PINNED_TOLERATED["TOLERATED_CALLABLES"]
-        if name.startswith(("ForwardView.", "KvPoolView."))
+        if name.startswith(("ForwardView.", "KdaStepView.", "KvPoolView."))
     }
     data = {
         "ForwardView",
+        "HybridPoolView",
+        "HybridStepView",
+        "PreparationView",
+        "block_table",
+        "cache",
+        "capacity",
+        "conv",
+        "kda",
+        "layer_mapping",
+        "logical_dtype",
         "KvPoolView",
         "MegakernelBinding",
         "metadata",
+        "mla",
+        "page_size",
+        "post_capture_active",
+        "reserved_capacity",
+        "sequence_lengths",
+        "serving_capacity",
+        "state",
+        "state_indices",
+        "storage_dtype",
+        "temporal",
         "kv_pool",
         "trtllm_attn",
         "uniform_fp8",
         "request_window",
+        "write_slots",
         "forward_view",
         "engram_history",
         "engram_host_table",
