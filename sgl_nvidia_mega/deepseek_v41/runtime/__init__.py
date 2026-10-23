@@ -191,7 +191,11 @@ SGLANG_READS = {
         '"tp_group"',
         '"attn_dp_size"',
     ),
-    "srt/megakernels/spec.py": ("widths", "tokens_per_request", "deadline_s"),
+    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
+        "widths",
+        "tokens_per_request",
+        "deadline_s",
+    ),
     "srt/models/deepseek_v4.py": (
         "DeepseekV4CudaDecoderLayer",
         "hc_pre_from_prev_sublayer",

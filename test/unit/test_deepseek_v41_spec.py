@@ -11,8 +11,14 @@ from unittest.mock import patch
 import msgspec
 import pytest
 from sglang.srt.environ import envs
-from sglang.srt.megakernels import guards
-from sglang.srt.megakernels import spec as registry
+
+try:
+    from sglang.kernels.plugin_kernels.nvidia import spec as registry
+    from sglang.srt.kernel_plugins.nvidia import binding as guards
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+    from sglang.srt.megakernels import guards
+    from sglang.srt.megakernels import spec as registry
+
 from sglang.srt.model_executor.cuda_graph_config import (
     Backend,
     Phase,

@@ -3,7 +3,7 @@
 """The DeepSeek-V4.1 megakernel's spec: the setups it serves and its build.
 
 SGLang checks the requirements at argument resolution and the model at load
-(``sglang.srt.megakernels``); an unsupported setup stops the server on every rank,
+(``sglang.kernels.plugin_kernels.nvidia``); an unsupported setup stops the server on every rank,
 listing every reason. This module stays light: SGLang imports it in the launcher.
 """
 
@@ -14,13 +14,22 @@ import importlib.util
 import os
 from pathlib import Path
 
-from sglang.srt.megakernels.spec import (
-    Feature,
-    MegakernelSpec,
-    Numerics,
-    NumericsKind,
-    Requirements,
-)
+try:
+    from sglang.kernels.plugin_kernels.nvidia.spec import (
+        Feature,
+        MegakernelSpec,
+        Numerics,
+        NumericsKind,
+        Requirements,
+    )
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+    from sglang.srt.megakernels.spec import (
+        Feature,
+        MegakernelSpec,
+        Numerics,
+        NumericsKind,
+        Requirements,
+    )
 
 from sgl_nvidia_mega.deepseek_v41 import HF_CONFIG
 from sgl_nvidia_mega.deepseek_v41.plan import max_rows
@@ -28,7 +37,7 @@ from sgl_nvidia_mega.deepseek_v41.runtime import SLOTS
 
 # The SGLang names this module reads (test/unit/test_contract.py pins them)
 SGLANG_READS = {
-    "srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
         "Feature",
         "SPECULATIVE_DECODING",
         "MegakernelSpec",
@@ -54,7 +63,7 @@ SGLANG_READS = {
 }
 
 ARCHITECTURE = "DeepseekV4ForCausalLM"
-# the sglang.srt.megakernels contract this spec is written against
+# the SGLang megakernel contract this spec is written against
 API_VERSION = 1
 # The FlashInfer low-latency GEMM file the wo_b publish epilogue subclasses, by the
 # sha256 of its source; it is byte-identical in FlashInfer 0.7.0, 0.7.1 and 0.7.2

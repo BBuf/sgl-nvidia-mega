@@ -4,7 +4,11 @@
 registry and no hook on SGLang's code, except the parity test's own."""
 
 import pytest
-from sglang.srt.megakernels import spec as registry
+
+try:
+    from sglang.kernels.plugin_kernels.nvidia import spec as registry
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+    from sglang.srt.megakernels import spec as registry
 
 from sgl_nvidia_mega import plugin
 

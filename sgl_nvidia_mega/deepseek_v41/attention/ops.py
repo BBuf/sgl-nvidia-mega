@@ -40,7 +40,7 @@ SGLANG_READS = {
     ),
     "srt/layers/quantization/mxfp8_input.py": ("Mxfp8SwizzledInput",),
     "srt/layers/moe/utils.py": ("should_skip_mlp_all_reduce",),
-    "srt/megakernels/binding.py": (
+    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
         "ForwardView",
         "kv_pool",
         "store_cache",
