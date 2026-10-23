@@ -33,7 +33,7 @@ import os
 import torch
 
 try:
-    from sglang.kernels.plugin_kernels.nvidia.spec import Step
+    from sglang.kernels.plugin_kernels.megakernel.spec import Step
 except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
     from sglang.srt.megakernels.spec import Step
 
@@ -46,7 +46,7 @@ logger = logging.getLogger(__name__)
 # The SGLang names this module reads (test/unit/test_contract.py pins them)
 SGLANG_READS = {
     # Step, and the BuiltMegakernel members SGLang reads
-    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/megakernel/spec.py|srt/megakernels/spec.py": (
         "Step",
         "mode",
         "rows",

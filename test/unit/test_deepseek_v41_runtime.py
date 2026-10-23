@@ -19,7 +19,7 @@ from scheduler_init import (  # noqa: E402
 )
 
 try:
-    from sglang.kernels.plugin_kernels.nvidia.spec import Step
+    from sglang.kernels.plugin_kernels.megakernel.spec import Step
 except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
     from sglang.srt.megakernels.spec import Step
 
@@ -168,7 +168,7 @@ def test_runtime_build_hands_every_package_the_binding(monkeypatch):
         lambda: SimpleNamespace(tp_group=None),
     )
     try:
-        from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
+        from sglang.srt.kernel_plugins.megakernel.binding import MegakernelBinding
     except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
         from sglang.srt.megakernels.binding import MegakernelBinding
 
@@ -332,7 +332,7 @@ def test_the_host_table_comes_from_the_binding(monkeypatch):
     """SGLang's own MegakernelBinding hands the layer's host table (a shared one here,
     which the prefetch refuses)."""
     try:
-        from sglang.srt.kernel_plugins.nvidia.binding import MegakernelBinding
+        from sglang.srt.kernel_plugins.megakernel.binding import MegakernelBinding
     except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
         from sglang.srt.megakernels.binding import MegakernelBinding
 

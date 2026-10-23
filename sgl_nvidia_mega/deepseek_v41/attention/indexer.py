@@ -102,7 +102,7 @@ SGLANG_READS = {
         "build_sparse_indexer_schedule",
         "sort_candidate_blocks",
     ),
-    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+    "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py": (
         "metadata",
         "kv_pool",
         "pool",

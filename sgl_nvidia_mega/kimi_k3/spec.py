@@ -7,20 +7,35 @@ from __future__ import annotations
 import math
 from typing import TYPE_CHECKING, Any, cast
 
-from sglang.srt.megakernels.spec import (
-    BuildContext,
-    BuiltMegakernel,
-    Feature,
-    MegakernelSpec,
-    Numerics,
-    NumericsKind,
-    Requirements,
-    Step,
-)
+try:
+    from sglang.kernels.plugin_kernels.megakernel.spec import (
+        BuildContext,
+        BuiltMegakernel,
+        Feature,
+        MegakernelSpec,
+        Numerics,
+        NumericsKind,
+        Requirements,
+        Step,
+    )
+except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+    from sglang.srt.megakernels.spec import (
+        BuildContext,
+        BuiltMegakernel,
+        Feature,
+        MegakernelSpec,
+        Numerics,
+        NumericsKind,
+        Requirements,
+        Step,
+    )
 from sglang.srt.runtime_context import get_model
 
 if TYPE_CHECKING:
-    from sglang.srt.megakernels.binding import PreparationView
+    try:
+        from sglang.srt.kernel_plugins.megakernel.binding import PreparationView
+    except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+        from sglang.srt.megakernels.binding import PreparationView
 
 WIDTHS = (1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64)
 # Keep this independent of the host constant so find_spec rejects incompatibility.
@@ -28,7 +43,7 @@ REQUIRED_MEGAKERNEL_API_VERSION = 1
 
 # Names read from SGLang internals. A contract test checks these before GPU use.
 SGLANG_READS = {
-    "srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/megakernel/spec.py|srt/megakernels/spec.py": (
         "BuildContext",
         "BuiltMegakernel",
         "Feature",
@@ -48,7 +63,9 @@ SGLANG_READS = {
         "view",
         "widths",
     ),
-    "srt/megakernels/binding.py": ("PreparationView",),
+    "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py": (
+        "PreparationView",
+    ),
     "srt/runtime_context.py": ("get_model",),
     "srt/arg_groups/fields/*.py": (
         "context_length",

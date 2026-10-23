@@ -47,7 +47,7 @@ SGLANG_READS = {
         "rows",
         "dim",
     ),
-    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+    "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py": (
         "engram_host_table",
     ),
     "srt/models/deepseek_v4.py": (

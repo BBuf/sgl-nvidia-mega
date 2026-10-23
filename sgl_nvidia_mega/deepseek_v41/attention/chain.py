@@ -74,7 +74,7 @@ SGLANG_READS = {
         "_pad_tensor_to_size",
     ),
     "srt/layers/attention/dsv4/dsv41_sparse.py": ("wq_b",),
-    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+    "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py": (
         "ForwardView",
         "metadata",
         "kv_pool",

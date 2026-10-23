@@ -4,7 +4,7 @@
 calling, pinned on CPU against the installed SGLang.
 
 The megakernel lives outside SGLang, so it reads SGLang by name (its specs plug into
-``sglang.kernels.plugin_kernels.nvidia``). Every module that imports from
+``sglang.kernels.plugin_kernels.megakernel``). Every module that imports from
 ``sglang`` lists what it reads in ``SGLANG_READS``. A refactor that renames one fails here, naming the file to
 repair, instead of failing at a GPU server's startup. The checks are static
 (AST): no module of this package is imported. A file that moved between SGLang
@@ -118,7 +118,7 @@ def test_sglang_provides_what_the_plugin_reads(path):
 
 # What SGLang's binding file tolerates the megakernel still calling, writing and
 # reading; any change there must be reviewed here
-BINDING = "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py"
+BINDING = "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py"
 PINNED_TOLERATED = {
     "TOLERATED_CALLABLES": (
         "ForwardView.attention",

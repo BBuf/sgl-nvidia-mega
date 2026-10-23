@@ -254,7 +254,10 @@ class TestKimiK3RuntimeCompatibility(unittest.TestCase):
         self.assertEqual(version.call_count, 4)
 
     def test_build_checks_compatibility_before_resource_construction(self):
-        from sglang.srt.megakernels.spec import BuildContext
+        try:
+            from sglang.kernels.plugin_kernels.megakernel.spec import BuildContext
+        except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+            from sglang.srt.megakernels.spec import BuildContext
 
         from sgl_nvidia_mega.kimi_k3 import spec
 
@@ -312,7 +315,10 @@ class TestKimiK3RuntimeCompatibility(unittest.TestCase):
         build_mock.assert_not_called()
 
     def test_invalid_deadlines_stop_before_compatibility_validation(self):
-        from sglang.srt.megakernels.spec import BuildContext
+        try:
+            from sglang.kernels.plugin_kernels.megakernel.spec import BuildContext
+        except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+            from sglang.srt.megakernels.spec import BuildContext
 
         from sgl_nvidia_mega.kimi_k3 import spec
 
@@ -335,12 +341,20 @@ class TestKimiK3RuntimeCompatibility(unittest.TestCase):
 
 class TestKimiK3PoolGuards(unittest.TestCase):
     def _resources_and_pool(self):
-        from sglang.srt.megakernels.binding import (
-            HybridPoolView,
-            KdaPoolView,
-            KdaStateView,
-            MlaPoolView,
-        )
+        try:
+            from sglang.srt.kernel_plugins.megakernel.binding import (
+                HybridPoolView,
+                KdaPoolView,
+                KdaStateView,
+                MlaPoolView,
+            )
+        except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+            from sglang.srt.megakernels.binding import (
+                HybridPoolView,
+                KdaPoolView,
+                KdaStateView,
+                MlaPoolView,
+            )
 
         from sgl_nvidia_mega.kimi_k3.providers import PreparedAttention, ResourceSet
 
@@ -520,11 +534,18 @@ class TestKimiK3PoolGuards(unittest.TestCase):
 
 class TestKimiK3StepGuards(unittest.TestCase):
     def _view(self, *, batch: int = 2, pages: int = 8):
-        from sglang.srt.megakernels.binding import (
-            HybridStepView,
-            KdaStepView,
-            MlaStepView,
-        )
+        try:
+            from sglang.srt.kernel_plugins.megakernel.binding import (
+                HybridStepView,
+                KdaStepView,
+                MlaStepView,
+            )
+        except ModuleNotFoundError:  # SGLang before sgl-project/sglang#45389
+            from sglang.srt.megakernels.binding import (
+                HybridStepView,
+                KdaStepView,
+                MlaStepView,
+            )
 
         return HybridStepView(
             mla=MlaStepView(

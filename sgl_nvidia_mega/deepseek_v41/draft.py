@@ -12,7 +12,7 @@ from __future__ import annotations
 from typing import Callable, Optional
 
 try:
-    from sglang.kernels.plugin_kernels.nvidia.spec import (
+    from sglang.kernels.plugin_kernels.megakernel.spec import (
         Feature,
         MegakernelSpec,
         Numerics,
@@ -33,7 +33,7 @@ from sgl_nvidia_mega.deepseek_v41 import spec as target
 # The SGLang names this module reads, by file under the sglang package;
 # test/unit/test_contract.py pins them.
 SGLANG_READS = {
-    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/megakernel/spec.py|srt/megakernels/spec.py": (
         "Feature",
         "MegakernelSpec",
         "Numerics",

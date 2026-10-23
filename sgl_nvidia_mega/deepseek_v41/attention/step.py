@@ -91,7 +91,7 @@ SGLANG_READS = {
         "forward_low_ratio_sources(run_indexer)",
         "forward_low_ratio_sources(run_compressor)",
     ),
-    "srt/kernel_plugins/nvidia/binding.py|srt/megakernels/binding.py": (
+    "srt/kernel_plugins/megakernel/binding.py|srt/megakernels/binding.py": (
         "ForwardView",
         "metadata",
         "kv_pool",

@@ -3,7 +3,7 @@
 """The DeepSeek-V4.1 megakernel's spec: the setups it serves and its build.
 
 SGLang checks the requirements at argument resolution and the model at load
-(``sglang.kernels.plugin_kernels.nvidia``); an unsupported setup stops the server on every rank,
+(``sglang.kernels.plugin_kernels.megakernel``); an unsupported setup stops the server on every rank,
 listing every reason. This module stays light: SGLang imports it in the launcher.
 """
 
@@ -15,7 +15,7 @@ import os
 from pathlib import Path
 
 try:
-    from sglang.kernels.plugin_kernels.nvidia.spec import (
+    from sglang.kernels.plugin_kernels.megakernel.spec import (
         Feature,
         MegakernelSpec,
         Numerics,
@@ -37,7 +37,7 @@ from sgl_nvidia_mega.deepseek_v41.runtime import SLOTS
 
 # The SGLang names this module reads (test/unit/test_contract.py pins them)
 SGLANG_READS = {
-    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/megakernel/spec.py|srt/megakernels/spec.py": (
         "Feature",
         "SPECULATIVE_DECODING",
         "MegakernelSpec",

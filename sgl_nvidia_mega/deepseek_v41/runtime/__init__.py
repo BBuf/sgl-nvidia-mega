@@ -191,7 +191,7 @@ SGLANG_READS = {
         '"tp_group"',
         '"attn_dp_size"',
     ),
-    "kernels/plugin_kernels/nvidia/spec.py|srt/megakernels/spec.py": (
+    "kernels/plugin_kernels/megakernel/spec.py|srt/megakernels/spec.py": (
         "widths",
         "tokens_per_request",
         "deadline_s",
